@@ -140,7 +140,7 @@ function showRatios($someArray){
 		}else{
 			$isSimpleNum = false;
 			$moduleOfNum = abs($num);
-			for($i = 2; $i < $moduleOfNum; $i++){
+			for($i = 2; $i < $num; $i++){
 				if($num % $i){
 					$isSimpleNum = true;
 				}else{
@@ -313,8 +313,8 @@ function recursiveShowRatiosF($someArray, $returnedData, $i = 0){
 	}else{
 		$isSimpleNum = false;
 		$moduleOfNum = abs($someArray[$i]);
-		for($j = 2; $j < $moduleOfNum; $j++){
-			if($someArray[$j] % $j){
+		for($j = 2; $j < $someArray[$i]; $j++){
+			if($someArray[$i] % $j){
 				$isSimpleNum = true;
 			}else{
 				$isSimpleNum = false;
