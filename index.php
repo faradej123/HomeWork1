@@ -34,18 +34,16 @@ function showFibonacciNumbers($countOfFibNum){
 	if ($countOfFibNum > 0){
 		$firstFib = 1;
 		$secondFib = 1;
-		for ($i = 0; $i < $countOfFibNum; $i++) {
-			if($i > 1){
-				$nextFib = $firstFib + $secondFib;
-				echo ", " . $nextFib;
-				$firstFib = $secondFib;
-				$secondFib = $nextFib;
-			}
-			elseif($i == 0){
-				echo $firstFib;
-			}elseif($i == 1){
-				echo ", " . $secondFib;
-			}
+        if($countOfFibNum >= 2 ){
+            echo $firstFib . ", " . $secondFib;
+        }elseif($countOfFibNum == 1){
+            echo $firstFib;
+        }
+		for ($i = 3; $i <= $countOfFibNum; $i++) {
+            $nextFib = $firstFib + $secondFib;
+            echo ", " . $nextFib;
+            $firstFib = $secondFib;
+            $secondFib = $nextFib;
 		}
 	} else {
 		return false;
@@ -284,7 +282,7 @@ echo "Конвертация с бинарных в дестичные: ";
 var_dump(fromBinaryToDecimal("11"));
 echo "<br>";
 echo "Фибоначи: ";
-showFibonacciNumbers(3);
+showFibonacciNumbers(4);
 echo "<br>";
 echo "Возведение в степень: ";
 var_dump(myPow(5, -3));
