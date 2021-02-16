@@ -119,6 +119,9 @@ function addZeroToIP($ip){
 //Массивы
 
 function showRatios($someArray){
+	if(!is_array($someArray) || empty($someArray)){
+		return NULL;
+	}
 	$positiveNum = 0;
 	$negativeNum = 0;
 	$zeroNum = 0; 
@@ -274,6 +277,197 @@ function verifyMatrixSize($matrix){
 	}
 }
 
+function showRatiosWithRecursion($someArray){
+	if(!is_array($someArray) || empty($someArray)){
+		return NULL;
+	}
+	$returnedData = array(
+		"positiveNum" => 0,
+		"negativeNum" => 0,
+		"zeroNum" => 0,
+		"simpleNum" => 0,
+	);
+
+	$result = recursiveShowRatiosF($someArray, $returnedData);
+	$totalNumCount = count($someArray);
+	$positiveNumPercent = $result["positiveNum"] * 100 / $totalNumCount;
+	$negativeNumPercent = $result["negativeNum"] * 100 / $totalNumCount;
+	$zeroNumPercent = $result["zeroNum"] * 100 / $totalNumCount;
+	$simpleNumPercent = $result["simpleNum"] * 100 / $totalNumCount;
+	echo "Позитивных: " . round($positiveNumPercent) . "%<br>Отрицательных: " . round($negativeNumPercent) . "%<br>Нулевых: " . round($zeroNumPercent) . "%<br>Простых: " . round($simpleNumPercent) . "%";
+}
+
+function recursiveShowRatiosF($someArray, $returnedData, $i = 0){
+	if(count($someArray) == $i){
+		return $returnedData;
+	}
+	if($someArray[$i] > 0){
+		$returnedData["positiveNum"]++;
+	}elseif($someArray[$i] < 0){
+		$returnedData["negativeNum"]++;
+	}elseif($someArray[$i] == 0){
+		$returnedData["zeroNum"]++;
+	}
+	if($someArray[$i] == 2 || $someArray[$i] == 3){
+		$returnedData["simpleNum"]++;
+	}else{
+		$isSimpleNum = false;
+		$moduleOfNum = abs($someArray[$i]);
+		for($j = 2; $j < $moduleOfNum; $j++){
+			if($someArray[$j] % $j){
+				$isSimpleNum = true;
+			}else{
+				$isSimpleNum = false;
+				break;
+			}
+		}
+		if($isSimpleNum){
+			$returnedData["simpleNum"]++;
+		}
+	}
+	$i++;
+	return recursiveShowRatiosF($someArray, $returnedData, $i);
+}
+
+function myBubblesortWithRecursion($arrToSort){
+	if(!is_array($arrToSort)){
+		return NULL;
+	}else{
+
+		$arrToSort = recursiveBubbleF($arrToSort);
+	}
+	return $arrToSort;
+}
+
+function recursiveBubbleF($arrToSort, $i = 0){
+	if(count($arrToSort) == $i){
+		return $arrToSort;
+	}
+	for($j = 1; $j <= count($arrToSort)-1; $j++){
+		if($arrToSort[$j] < $arrToSort[$j-1]){
+			$temp = $arrToSort[$j-1];
+			$arrToSort[$j-1] = $arrToSort[$j];
+			$arrToSort[$j] = $temp;
+		}
+	}
+	$i++;
+	return recursiveBubbleF($arrToSort, $i);
+}
+
+function transposeTheMatrixWithRecursion($matrix){
+	if(!is_array($matrix) || !verifyMatrixSize($matrix)){
+		return NULL;
+	} else {
+		$newMatrix = recursiveTransposeF($matrix);
+		return $newMatrix;
+	}
+}
+
+function matrixMultiplicationWithRecursion($matrix1, $matrix2){
+	if(!verificationForMatrixMultiplication($matrix1, $matrix2)){
+		return NULL;
+	}else{
+		return recursiveMultiplication($matrix1, $matrix2);
+	}	
+}
+
+function recursiveTransposeF($matrix, $i = 0, $newMatrix = array()){
+	if(count($matrix) == $i){
+		return $newMatrix;
+	}
+	$rowCount = count($matrix[$i]);
+	for($j = 0; $j < $rowCount; $j++){
+		$newMatrix[$j][] = $matrix[$i][$j];
+	}
+	$i++;
+	return recursiveTransposeF($matrix, $i, $newMatrix);
+}
+
+function recursiveMultiplication($matrix1, $matrix2, $i = 0, $finalMatrix = array()){
+	if(count($matrix1) == $i){
+		return $finalMatrix;
+	}
+	$columnCount = count($matrix1[$i]);
+	for($j = 0; $j < $columnCount; $j++){
+		$finalMatrix[$i][$j] = $matrix1[$i][$j] * $matrix2[$i][$j];
+	}
+	$i++;
+	return recursiveMultiplication($matrix1, $matrix2, $i, $finalMatrix);
+}
+
+function deleteNotValidRowFromMatrixWithRecursion($matrix){
+	if(!verifyMatrixSize($matrix)){
+		return false;
+	}
+	$matrixWithValidRow = array();
+	$rowCount = count($matrix);
+	return recursiveDeleteF($matrix);
+}
+
+function recursiveDeleteF($matrix, $i = 0, $matrixWithValidRow = array()){
+	if(count($matrix) == $i){
+		return $matrixWithValidRow;
+	}
+	$columnCount = count($matrix[$i]);
+	$summ = 0;
+	$isZero = false;
+	for($j = 0; $j < $columnCount; $j++){
+		$summ += $matrix[$i][$j];
+		if($matrix[$i][$j] == 0){
+			$isZero = true;
+		}
+	}
+	if(!($summ > 0 && $isZero)){
+		array_push($matrixWithValidRow, $matrix[$i]);
+	}
+	$i++;
+	return recursiveDeleteF($matrix, $i, $matrixWithValidRow);
+}
+
+$anyArr = array(
+	array(
+		array(
+			array(
+				1 , 
+				10, 
+				20,
+				array(
+					"ololo" => "lolo",
+					"cheto-tam" => "taram"
+				),
+			),
+			1,
+		),
+		array(
+			"qwe","wasd"
+		),
+	),
+	array(
+		1, 2, 3, 4
+	),
+	array(
+		5
+	)
+);
+
+function showAllValueFromAnyArr($anyArr){
+	if(!is_array($anyArr) || empty($anyArr)){
+		return NULL;
+	}else{
+		recurciveShowValues($anyArr);
+	}	
+}
+
+function recurciveShowValues($arr){
+	foreach($arr as $value){
+		if(is_array($value)){
+			recurciveShowValues($value);
+		} else {
+			echo $value . "; ";
+		}
+	}
+}
+
 echo "Я сам смотрю результат возврата функций в дебагере, поэтому не приделял много внимания визульной части страницы, если нужно сделать более читабельно - пишите <br><br>";
 echo "Конвертация с десятичных в бинарные: ";
 var_dump(fromDecimalToBinary(111));
@@ -314,7 +508,6 @@ var_dump(transposeTheMatrix($someArray2));
 echo "<br><br>Переумножение массива:<br>";
 var_dump(matrixMultiplication($someArray2, $someArray3));
 echo "<br><br>Удаление строк и столбцов с положительной суммой и нулевым элементом<br>";
-
 $someArray4 = array(
 	array(3,2,-4,2,0),
 	array(0,2,-4,1,-5),
@@ -322,8 +515,24 @@ $someArray4 = array(
 	array(3,2,4,2,5),
 	array(-3,-2,4,2,-5),
 );
-$someArray4 = deleteNotValidRowFromMatrix($someArray4);
-$newArr = transposeTheMatrix($someArray4);
+$newArr = deleteNotValidRowFromMatrix($someArray4);
+$newArr = transposeTheMatrix($newArr);
 $newArr = deleteNotValidRowFromMatrix($newArr);
 $newArr = transposeTheMatrix($newArr);
 var_dump($newArr);
+echo "<br><b>Рекурсии</b><br>Процентное соотношение разных элементов массива:<br>";
+showRatiosWithRecursion($someArray);
+echo "<br><br>Сортировка массива<br>";
+var_dump(myBubblesortWithRecursion($someArray));
+echo "<br><br>Переворачивание матрицы<br>";
+var_dump(transposeTheMatrixWithRecursion($someArray2));
+echo "<br><br>Переумножение массива:<br>";
+var_dump(matrixMultiplicationWithRecursion($someArray2, $someArray3));
+echo "<br><br>Удаление строк и столбцов с положительной суммой и нулевым элементом<br>";
+$newArr2 = deleteNotValidRowFromMatrixWithRecursion($someArray4);
+$newArr2 = transposeTheMatrix($newArr2);
+$newArr2 = deleteNotValidRowFromMatrixWithRecursion($newArr2);
+$newArr2 = transposeTheMatrix($newArr2);
+var_dump($newArr2);
+echo "<br><br>Вывод значений массива<br>";
+showAllValueFromAnyArr($anyArr);
