@@ -23,7 +23,7 @@ class Circle extends Shape
         return $this->radius * $this->radius * M_PI;
     }
 
-    protected function verifyParameters($radius)
+    private function verifyParameters($radius)
     {
         if ($radius <= 0) {
             throw new Exception ("Радиус круга не может быть равным или ниже нуля!");

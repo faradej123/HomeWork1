@@ -119,8 +119,6 @@ function ipVerification($ip)
 		throw new Exception();
 	} else {
 		foreach ($ipInArr as $ipPart) {
-			$a = !ctype_digit((string)$ipPart);
-			$b = ($ipPart < 0 || $ipPart > 255);
 			if (!ctype_digit((string)$ipPart) || ($ipPart < 0 || $ipPart > 255)) {
 				throw new Exception();
 			}
@@ -514,30 +512,14 @@ function recursiveDeleteF($matrix, $i = 0, $matrixWithValidRow = [])
 	return recursiveDeleteF($matrix, $i, $matrixWithValidRow);
 }
 
-$anyArr = [
-	[ 
-	  [ 
-	    [ 
-		  1, 
-		  10, 
-		  20, 
-		  [ "ololo" => "lolo", "cheto-tam" => "taram" ], 
-	    ], 
-	    1, 
-	  ], 
-	  [ "qwe","wasd" ], 
-	],
-	[ 1, 2, 3, 4 ],
-	[ 5 ]
-];
 
-function showAllValueFromAnyArr($anyArr)
+function showAllValueFromAnyArr($mixedArr)
 {
 	try {
-		if (!is_array($anyArr) || empty($anyArr)) {
+		if (!is_array($mixedArr) || empty($mixedArr)) {
 			throw new Exception();
 		} else {
-			recurciveShowValues($anyArr);
+			recurciveShowValues($mixedArr);
 		}
 	} catch (Exception $e) {
 		return NULL;
@@ -562,6 +544,41 @@ function recurciveShowValues($arr)
 	}
 }
 
+$oneDimensionalArr = [1, 2, -1, 0, 7, 10, 3, -5, 0, -7];
+$matrixA3x5 = [
+	[-1,6,-3,7,-4],
+	[-8,-4,6,-3,9],
+	[7,-4,9,-1, 1],
+];
+$matrixB3x5 = [
+	[3,2,4,2,1],
+	[0,2,4,1,5],
+	[3,2,4,2,5],
+];
+$arrForDeleteNotValidRowFunc = [
+	[3,2,-4,2,0],
+	[0,2,-4,1,-5],
+	[3,-2,4,-2,5],
+	[3,2,4,2,5],
+	[-3,-2,4,2,-5],
+];
+$mixedArr = [
+	[ 
+	  [ 
+	    [ 
+		  1, 
+		  10, 
+		  20, 
+		  [ "ololo" => "lolo", "cheto-tam" => "taram" ], 
+	    ], 
+	    1, 
+	  ], 
+	  [ "qwe","wasd" ], 
+	],
+	[ 1, 2, 3, 4 ],
+	[ 5 ]
+];
+
 echo "Я сам смотрю результат возврата функций в дебагере, поэтому не приделял много внимания визульной части страницы, если нужно сделать более читабельно - пишите <br><br>";
 echo "Конвертация с десятичных в бинарные: ";
 var_dump(fromDecimalToBinary(-111));
@@ -579,53 +596,32 @@ echo "Проверка диапазона IP: ";
 var_dump(checkIfTheIpIsInTheRange("193.168.101.111"));
 echo "<br><br><br><b>Массивы:</b>";
 echo "<br>Процентное соотношение разных элементов массива:<br>";
-$someArray = [1, 2, -1, 0, 7, 10, 3, -5, 0, -7];
-showRatios($someArray);
+showRatios($oneDimensionalArr);
 echo "<br><br>Сортировка массива<br>";
-var_dump(myBubblesort($someArray));
+var_dump(myBubblesort($oneDimensionalArr));
 echo "<br><br>Переворачивание матрицы<br>";
-$someArray2 = [
-	[-1,6,-3,7,-4],
-	[-8,-4,6,-3,9],
-	[7,-4,9,-1, 1],
-];
-$someArray3 = [
-	[3,2,4,2,1],
-	[0,2,4,1,5],
-	[3,2,4,2,5],
-];
-$someArray12121 = [
-	1
-];
-var_dump(transposeTheMatrix($someArray2));
+var_dump(transposeTheMatrix($matrixA3x5));
 echo "<br><br>Переумножение массива:<br>";
-var_dump(matrixMultiplication($someArray2, $someArray3));
+var_dump(matrixMultiplication($matrixA3x5, $matrixB3x5));
 echo "<br><br>Удаление строк и столбцов с положительной суммой и нулевым элементом<br>";
-$someArray4 = [
-	[3,2,-4,2,0],
-	[0,2,-4,1,-5],
-	[3,-2,4,-2,5],
-	[3,2,4,2,5],
-	[-3,-2,4,2,-5],
-];
-$newArr = deleteNotValidRowFromMatrix($someArray4);
-$newArr = transposeTheMatrix($newArr);
-$newArr = deleteNotValidRowFromMatrix($newArr);
-$newArr = transposeTheMatrix($newArr);
-var_dump($newArr);
+$newValidArr = deleteNotValidRowFromMatrix($arrForDeleteNotValidRowFunc);
+$newValidArr = transposeTheMatrix($newValidArr);
+$newValidArr = deleteNotValidRowFromMatrix($newValidArr);
+$newValidArr = transposeTheMatrix($newValidArr);
+var_dump($newValidArr);
 echo "<br><br><br><b>Рекурсии</b><br>Процентное соотношение разных элементов массива:<br>";
-showRatiosWithRecursion($someArray);
+showRatiosWithRecursion($oneDimensionalArr);
 echo "<br><br>Сортировка массива<br>";
-var_dump(myBubblesortWithRecursion($someArray));
+var_dump(myBubblesortWithRecursion($oneDimensionalArr));
 echo "<br><br>Переворачивание матрицы<br>";
-var_dump(transposeTheMatrixWithRecursion($someArray2));
+var_dump(transposeTheMatrixWithRecursion($matrixA3x5));
 echo "<br><br>Переумножение массива:<br>";
-var_dump(matrixMultiplicationWithRecursion($someArray2, $someArray3));
+var_dump(matrixMultiplicationWithRecursion($matrixA3x5, $matrixB3x5));
 echo "<br><br>Удаление строк и столбцов с положительной суммой и нулевым элементом<br>";
-$newArr2 = deleteNotValidRowFromMatrixWithRecursion($someArray4);
-$newArr2 = transposeTheMatrix($newArr2);
-$newArr2 = deleteNotValidRowFromMatrixWithRecursion($newArr2);
-$newArr2 = transposeTheMatrix($newArr2);
-var_dump($newArr2);
+$newValidArrFromRecurciveF = deleteNotValidRowFromMatrixWithRecursion($arrForDeleteNotValidRowFunc);
+$newValidArrFromRecurciveF = transposeTheMatrix($newValidArrFromRecurciveF);
+$newValidArrFromRecurciveF = deleteNotValidRowFromMatrixWithRecursion($newValidArrFromRecurciveF);
+$newValidArrFromRecurciveF = transposeTheMatrix($newValidArrFromRecurciveF);
+var_dump($newValidArrFromRecurciveF);
 echo "<br><br>Вывод значений массива<br>";
-showAllValueFromAnyArr($anyArr);
+showAllValueFromAnyArr($mixedArr);

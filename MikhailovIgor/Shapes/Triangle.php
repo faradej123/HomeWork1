@@ -5,10 +5,10 @@ use Exception;
 
 class Triangle extends Shape 
 {
-    protected $edgeLength1; 
-    protected $edgeLength2;
-    protected $edgeLength3;
-    
+    private $edgeLength1; 
+    private $edgeLength2;
+    private $edgeLength3;
+
     public function __construct(float $edgeLength1, float $edgeLength2, float $edgeLength3)
     {
         if ($this->verifyParameters($edgeLength1, $edgeLength2, $edgeLength3)) {       
@@ -28,7 +28,7 @@ class Triangle extends Shape
         return $space;
     }
 
-    protected function verifyParameters($edgeLength1, $edgeLength2, $edgeLength3)
+    private function verifyParameters($edgeLength1, $edgeLength2, $edgeLength3)
     {
         if ($edgeLength1 + $edgeLength2 > $edgeLength3 && $edgeLength2 + $edgeLength3 > $edgeLength1 && $edgeLength3 + $edgeLength1 > $edgeLength2) {
             return true;
