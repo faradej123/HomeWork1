@@ -1,11 +1,16 @@
 <?php
-require_once($_SERVER["CONTEXT_DOCUMENT_ROOT"] . "/MikhailovIgor/Shapes/Shape.php");
+require_once($_SERVER["CONTEXT_DOCUMENT_ROOT"] . "/Core/ClassLoader.php");
+
+ClassLoader::getInstance()->register();
+Router::getInstance()->register();
+
+/*require_once($_SERVER["CONTEXT_DOCUMENT_ROOT"] . "/MikhailovIgor/Shapes/Shape.php");
 require_once($_SERVER["CONTEXT_DOCUMENT_ROOT"] . "/MikhailovIgor/Shapes/Circle.php");
 require_once($_SERVER["CONTEXT_DOCUMENT_ROOT"] . "/MikhailovIgor/Shapes/Rectangle.php");
 require_once($_SERVER["CONTEXT_DOCUMENT_ROOT"] . "/MikhailovIgor/Shapes/Triangle.php");
-require_once($_SERVER["CONTEXT_DOCUMENT_ROOT"] . "/MikhailovIgor/Logger/Logger.php");
+require_once($_SERVER["CONTEXT_DOCUMENT_ROOT"] . "/MikhailovIgor/Logger/Logger.php");*/
 
-use MikhailovIgor\Shapes\Shape;
+/*use MikhailovIgor\Shapes\Shape;
 use MikhailovIgor\Shapes\Circle;
 use MikhailovIgor\Shapes\Rectangle;
 use MikhailovIgor\Shapes\Triangle;
@@ -46,4 +51,4 @@ $loggerForShapes->createLog("Был создан прямоугольник с �
 } catch(Exception $e) {
     echo $e->getMessage() . "<br>";
     $loggerForShapes->createLog($e->getMessage(), "FATAL");
-}
+}*/
