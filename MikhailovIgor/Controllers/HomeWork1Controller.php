@@ -3,7 +3,7 @@ namespace MikhailovIgor\Controllers;
 
 use Exception;
 
-class HomeWork1Controller {
+class HomeWork1Controller extends \Core\Controller{
     public function __construct()
     {
     }

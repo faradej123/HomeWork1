@@ -1,19 +1,10 @@
 <?php
 namespace MikhailovIgor\Controllers;
 
-class HomePageController {
+class HomePageController extends \Core\Controller{
     public function __construct()
     {
     }
-
-    /*public static function getInstance()
-    {
-        if (self::$classLoader === null) {
-            self::$classLoader = new self();
-        }
-
-        return self::$classLoader;
-    }*/
 
     public function showUrls()
     {
@@ -24,9 +15,5 @@ class HomePageController {
                 echo "<a href=${url}>$key<a></br>";
             }
         }
-    }
-
-    public function section(){
-        echo "IT IS SECTION";
     }
 }

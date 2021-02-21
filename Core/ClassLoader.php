@@ -1,4 +1,5 @@
 <?php
+namespace Core;
 
 class ClassLoader
 {
@@ -27,11 +28,7 @@ class ClassLoader
     public function load($class)
     {
         $class = str_replace("\\", "/", $class);
-        if ($class == "Router") {
-            require_once($class . ".php");
-        } else {
-            require_once($_SERVER["CONTEXT_DOCUMENT_ROOT"] . "/" . $class . ".php");
-        }
+        require_once($_SERVER["CONTEXT_DOCUMENT_ROOT"] . "/" . $class . ".php");
     }
 
     private function __sleep()
